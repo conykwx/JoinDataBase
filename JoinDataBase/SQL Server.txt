@@ -1,0 +1,68 @@
+﻿// Записи в SQL Server, створення таблиць для їх використання в проекті.
+
+USE Stationery;
+
+-- Створення таблиці для канцтоварів
+CREATE TABLE Stationery (
+    StationeryID INT PRIMARY KEY IDENTITY(1,1),
+    Name NVARCHAR(100),
+    Type NVARCHAR(50),
+    Quantity INT,
+    Cost DECIMAL(10, 2)
+);
+
+-- Створення таблиці для менеджерів
+CREATE TABLE SalesManagers (
+    ManagerID INT PRIMARY KEY IDENTITY(1,1),
+    Name NVARCHAR(100)
+);
+
+-- Створення таблиці для покупців
+CREATE TABLE Buyers (
+    BuyerID INT PRIMARY KEY IDENTITY(1,1),
+    FirmName NVARCHAR(100)
+);
+
+-- Створення таблиці для продажів
+CREATE TABLE Sales (
+    SaleID INT PRIMARY KEY IDENTITY(1,1),
+    StationeryID INT,
+    ManagerID INT,
+    BuyerID INT,
+    QuantitySold INT,
+    Price DECIMAL(10, 2),
+    SaleDate DATETIME,
+    FOREIGN KEY (StationeryID) REFERENCES Stationery(StationeryID),
+    FOREIGN KEY (ManagerID) REFERENCES SalesManagers(ManagerID),
+    FOREIGN KEY (BuyerID) REFERENCES Buyers(BuyerID)
+);
+
+-- Інсерт для таблиці канцтоварів
+INSERT INTO Stationery (Name, Type, Quantity, Cost)
+VALUES
+('Ручка', 'Письмові прилади', 100, 2.50),
+('Блокнот', 'Папір', 200, 1.20),
+('Файл', 'Папір', 150, 0.80);
+
+-- Інсерт для таблиці менеджерів
+INSERT INTO SalesManagers (Name)
+VALUES
+('Іванов Іван'),
+('Петренко Петро'),
+('Сидоренко Сергій');
+
+-- Інсерт для таблиці покупців
+INSERT INTO Buyers (FirmName)
+VALUES
+('Товариство "А"'),
+('Товариство "Б"'),
+('Товариство "В"');
+
+-- Інсерт для таблиці продажів
+INSERT INTO Sales (StationeryID, ManagerID, BuyerID, QuantitySold, Price, SaleDate)
+VALUES
+(1, 1, 1, 50, 2.50, '2024-12-08'),
+(2, 2, 2, 100, 1.20, '2024-12-08'),
+(3, 3, 3, 30, 0.80, '2024-12-08');
+
+// conyk
